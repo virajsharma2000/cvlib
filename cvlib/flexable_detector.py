@@ -21,7 +21,7 @@ def detect(image, caffemodel, threshold=0.5, enable_gpu=False):
         prototxt = resource_filename(Requirement.parse('cvlib'),
                                                    'cvlib' + os.path.sep + 'data' + os.path.sep + 'deploy.prototxt')
         
-        # read pre-trained wieights
+        # read pre-trained weights
         net = cv2.dnn.readNetFromCaffe(prototxt, caffemodel)
     
         is_initialized = True
@@ -37,13 +37,13 @@ def detect(image, caffemodel, threshold=0.5, enable_gpu=False):
     blob = cv2.dnn.blobFromImage(image, 1.0, (300,300), (104.0,177.0,123.0))
     net.setInput(blob)
 
-    # apply face detection
+    # apply detection
     detections = net.forward()
 
     detected_bboxes = []
     confidences = []
 
-    # loop through detected faces
+    # loop through detections
     for i in range(0, detections.shape[2]):
         conf = detections[0,0,i,2]
 
@@ -51,7 +51,7 @@ def detect(image, caffemodel, threshold=0.5, enable_gpu=False):
         if conf < threshold:
             continue
 
-        # get corner points of face rectangle
+        # get corner points of rectangle
         box = detections[0,0,i,3:7] * np.array([w,h,w,h])
         (startX, startY, endX, endY) = box.astype('int')
 
