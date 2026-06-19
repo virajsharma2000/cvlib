@@ -58,7 +58,7 @@ def detect(image, caffemodel, threshold=0.5, enable_gpu=False):
         detected_bboxes.append([startX, startY, endX, endY])
         confidences.append(conf)
 
-    # return all detected faces and
+    # return all detected bboxes and
     # corresponding confidences    
     return detected_bboxes, confidences
 
